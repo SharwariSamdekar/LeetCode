@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        
+        //couldn't understand how to apply binary search for this problem. Problem falls under binary search category in leetcode
+        
+        set<int> n1(nums1.begin(),nums1.end());
+        set <int> n2(nums2.begin(),nums2.end());
+        vector<int> res;
+        
+        if(n1.size() > n2.size()){
+            for(int x : n2){
+                if(n1.find(x) != n1.end())
+                    res.push_back(x);
+            }
+        }
+        else{
+            for(int x : n1){
+                if(n2.find(x) != n2.end())
+                    res.push_back(x);
+            }
+        }
+        return res;
+        
+    }
+};
