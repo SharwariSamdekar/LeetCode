@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int mySqrt(int x) {
+        //p(mid) > x last F
+        
+        long int lo = 0, hi = x;
+        long int mid = 0;
+        
+        while(lo < hi){
+            
+            mid = lo + (hi - lo + 1)/2; 
+            
+            if((mid*mid) > x)
+                hi = mid - 1;
+            else
+                lo = mid;
+        }
+        
+        
+        if(lo*lo > x)
+            return lo - 1;
+        return lo;
+        
+    }
+};
