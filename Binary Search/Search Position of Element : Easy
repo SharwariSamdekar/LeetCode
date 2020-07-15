@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        //if p(x) >= target First T
+        int lo=0, hi=nums.size()-1,mid=0;
+        
+        while(lo < hi){
+            mid = lo + (hi - lo)/2;
+                
+            if(nums[mid] >= target)
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        
+        if(nums[lo] < target)
+            return lo + 1;
+        return lo;
+        
+    }
+};
