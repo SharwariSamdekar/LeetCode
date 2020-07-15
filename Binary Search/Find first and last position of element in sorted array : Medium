@@ -1,0 +1,55 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        // P(x) : x >= target 
+        // First T
+        
+        int lo = 0, hi = nums.size() - 1, mid = 0;
+        vector<int> res;
+        
+        if(nums.size() == 0){
+            vector<int> r;
+            r.push_back(-1);
+            r.push_back(-1);
+            return r;
+        }
+        
+        while(lo < hi){
+            mid = lo + (hi - lo) / 2;
+            
+            if(nums[mid] >= target)
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        
+        if(nums[lo] == target)
+            res.push_back(lo);
+        else
+            res.push_back(-1);
+            
+        //Ending
+        //P(x) : x > target last F
+        
+        lo = 0; 
+        hi = nums.size() - 1;
+        
+        while(lo < hi){
+            
+            mid = lo + (hi - lo + 1) / 2;
+                
+            if(nums[mid] > target)
+                hi = mid - 1;
+            else
+                lo = mid;
+        }
+        
+        if(nums[lo] == target)
+            res.push_back(lo);
+        else
+            res.push_back(-1);
+        
+        return res;
+        
+    }
+};
