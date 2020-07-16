@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& A) {
+        
+        //Explicit Search
+        //How to decide on predicate??
+        //FFFFTTTTT
+        // 0 0  1 2 1 0
+        //slope A[mid + 1] - A[mid] Niceeee
+        //First T
+        
+        
+        int n = A.size(),lo = 0, hi = n-1, mid;
+        
+        while(lo < hi){
+            mid = lo + (hi - lo )/2;
+            
+            if(A[mid] - A[mid + 1] > 0)
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        
+        //Sanity Check - no  need
+        // if(A[lo - 1] < A[lo] && A[lo] > A[lo+1])
+        //     return lo;
+        // else return -1;
+        return lo ;
+    }
+};
