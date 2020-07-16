@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        //Explicit Search Question
+        //Find first minimum and search in both the parts
+        
+        //FFFTTTTT
+        // x < A[0] First T
+        
+        int n = nums.size(), lo= 0, hi = n-1, mid;
+        
+        while(lo < hi){
+            //choice of mid
+            mid = lo + (hi - lo)/2;
+             //decision 
+            if(nums[mid] < nums[0])
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        //sanity check : needed 
+        //if ascending series then lo will not point to zero
+        
+        return min(nums[lo],nums[0]);
+        
+    }
+};
