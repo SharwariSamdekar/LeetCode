@@ -1,0 +1,50 @@
+class Solution {
+public:
+    
+    int getSum(vector<int> &arr, int value){
+        
+        int sum = 0;
+        for(auto &n: arr){
+            if(n >= value)
+                sum += value;
+            else
+                sum += n;
+        }
+        return sum;
+    }
+    
+    int findBestValue(vector<int>& arr, int target) {
+        //SS : 1 to max(arr)
+        //FFFFTTTT
+        //P(x) : sum >= Target, first T
+        
+        //1. Prepare Search space
+        
+        int maxN = *max_element(arr.begin(),arr.end());
+        
+        //2.Apply Predicate Framework
+        
+        int lo = 1, hi = maxN, mid;
+        
+        while(lo < hi){
+            mid = lo +(hi - lo)/2;
+                
+            if(getSum(arr,mid) >= target)
+                hi = mid;
+            else
+                lo = mid + 1;
+        }
+        
+        //Sanity check ??
+        
+        if(getSum(arr,lo) == target)
+            return lo;
+         // cout<<lo;
+        if(abs(getSum(arr,lo-1)-target) <= abs(getSum(arr,lo)-target))
+            return lo-1;
+       
+        return lo;
+
+        
+    }
+};
