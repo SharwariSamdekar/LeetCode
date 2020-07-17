@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+      
+        //Predicate Framework
+        //FFFFTTTTT
+        // citations at that number should be greater than remaining length
+        //P(X) : A[mid] > n-mid, Last F
+        int n = citations.size(), lo = 0, hi = n-1, mid;
+        
+        if(n == 0)
+            return 0;
+        while(lo < hi){
+            mid = lo + (hi - lo + 1)/2;
+                
+            if(citations[mid] > n-mid)
+                hi = mid - 1;
+            else
+                lo = mid;
+        }
+        //sanity check needed
+        
+        if(citations[lo] > n-lo)
+            return n;
+        if(citations[lo] == n-lo)
+            return n-lo;
+        else 
+            return n - lo - 1;
+        
+        
+     
+    }
+};
