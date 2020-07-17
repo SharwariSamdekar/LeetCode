@@ -1,0 +1,58 @@
+class Solution {
+public:
+    
+    bool validCap(vector<int> &weights, int cap, int D){
+        
+        int s = 0, n = weights.size(),i=0;
+        // cout<<"cap = "<<cap<<" ";
+        while(D >0 && i < n){
+            if(s + weights[i] <= cap){
+                s += weights[i];
+                // cout<<weights[i]<<" ";
+                i++;
+            }
+            else{
+                // cout<<endl;
+                s = 0;
+                D--;
+            }
+            
+        }
+        
+        if(D == 0 && i < n)
+            return false;
+        // cout<<" D "<<D<<" i = "<<i<<" "<<endl;
+        return true;
+    }
+    
+    int shipWithinDays(vector<int>& weights, int D) {
+        //Think of making capacity as search space
+        //SS : 0 to sum(weights)
+        //consider mid as capacity and add till sum is less than mid and check if we can load in alloted days
+        //FFFFTTTTT
+        //P(x) : ifcanload(x) is true : first T
+        
+        //1. Create search space
+        
+        int n = weights.size(),i,sum=0;
+        for(auto &w : weights){
+            sum += w;
+        }
+        
+        //2. Apply predicate logic
+        
+        int lo = 0, hi = sum,mid;
+        while(lo < hi){
+            mid = lo + (hi - lo )/2;
+                
+            if(validCap(weights,mid,D))
+                hi = mid ;
+            else
+                lo = mid + 1 ;
+        }
+        //sanity check ??
+        
+        // cout<<lo;
+        return lo;
+    }
+};
