@@ -1,0 +1,57 @@
+class Solution {
+public:
+    string rankTeams(vector<string>& votes) {
+        //Ordering Question
+        //Crux : Writing an algorithm for criteria
+        
+        // We have teams : A, B, C, D
+        //Rank the teams
+        //Develop an algorithm for criteria
+        //Write the comparator function
+        //Call sort with this comparator function
+        
+        //1. count number of votes for each position for every team
+         
+        //Data Structure : 1. Dictionary, 2. 2-D array
+        //Design of Rank table
+        // a.size of 2D array b. What R(i,j) points to
+        //c. Map a team to an index of 2D array
+        //can use hash mapping too
+        
+        //2. Logic for comparison function
+        //sort(s.begin(),s.end(),[](char &!, char &b)){
+       //criteria for sorting rank[a], rank[b] 
+    //}
+        
+        //Step 1 :
+        //Build the table
+        //Syntax to create a 26xN vector : vector<int> f(<size>,<Initial values>)
+        int N = votes[0].size(),i,j;
+        string res = votes[0];
+        vector<vector<int>> rank(26,vector<int>(N,0));
+         
+        for(i = 0; i < votes.size(); i++){
+            for(j = 0; j  < N; j++){
+                rank[votes[i][j] -'A'][j]++;
+            }
+        }
+        
+        //Step2 :
+        //Order
+        sort(res.begin(),res.end(),[&rank](char &t1, char &t2){
+            //Define Criteria
+            //Compare element by element
+            int i;
+            for(i = 0; i < rank[t1-'A'].size();i++){
+                if(rank[t1-'A'][i] > rank[t2-'A'][i])
+                    return true;
+                else if(rank[t1-'A'][i] < rank[t2-'A'][i])
+                    return false;
+            }
+            
+            return t1 < t2;
+        });
+        
+        return res;
+    }
+};
