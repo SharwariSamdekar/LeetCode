@@ -1,0 +1,25 @@
+bool comp(int &a, int &b){
+    string aStr = to_string(a);
+    string bStr = to_string(b);
+    
+    return((aStr+bStr) > (bStr+aStr));
+}
+
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        //Given a sequence and have to order it
+        
+        //concatenate two numbers and check which one is greater
+        sort(nums.begin(),nums.end(),comp);
+ 
+        int n = nums.size();
+        string str = "";
+        for(int i = 0; i < n; i++){
+            str = str + to_string(nums[i]);
+        }
+        
+        if(str[0] == '0') return "0";
+        return str;
+    }
+};
