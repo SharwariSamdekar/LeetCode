@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+        //Use maps to store count of each letter in string 
+        string t = s;
+        unordered_map<char,int> hash;
+        
+        for(int i = 0; i < s.length(); i++){
+            if(hash.find(s[i]) == hash.end()){
+                int cnt = count(s.begin(),s.end(),s[i]);
+                hash.insert({s[i],cnt});
+            }
+        }
+        sort(t.begin(),t.end(),[&](char &a, char &b){
+            // cout<<" char = "<<a<<" count = "<<count(s.begin(),s.end(),a);
+            int s1 = hash[a];
+            int s2 = hash[b];
+            if(s1 == s2)
+                return a > b;
+            return s1 > s2;
+        });
+        return t;
+    }
+};
