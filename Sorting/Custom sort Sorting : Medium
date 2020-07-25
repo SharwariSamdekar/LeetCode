@@ -1,0 +1,23 @@
+string temp;
+//making variables global is not recommended 
+//because of security issue. Anyone can access this data
+bool comp(char &a, char &b){
+    //Return true if a occurs before b in s
+    return temp.find(a) < temp.find(b);
+}
+
+class Solution {
+public:
+    string customSortString(string S, string T) {
+        temp = S;
+        
+        //lambda expressions
+        //Way to define functions inline
+        //[capture data](char &a, char&b){}
+        sort(T.begin(),T.end(),[S](char &a, char&b){
+            return S.find(a) < S.find(b);
+        });
+        
+        return T;
+    }
+};
