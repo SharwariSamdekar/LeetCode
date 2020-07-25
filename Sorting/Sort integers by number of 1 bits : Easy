@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> sortByBits(vector<int>& arr) {
+        
+        sort(arr.begin(),arr.end(),[arr](int &a, int &b){
+            int s1=0,s2=0,i;
+             int aa = a, bb = b;
+            while(aa){
+                if(aa & 1)
+                    s1++;
+                aa = aa>>1;
+            }
+            while(bb){
+                if(bb & 1)
+                    s2++;
+                bb = bb>>1;
+            }
+            if(s1 == s2)
+                return a < b;
+            else
+                return s1 < s2;
+            
+        });
+        return arr;
+    }
+};
