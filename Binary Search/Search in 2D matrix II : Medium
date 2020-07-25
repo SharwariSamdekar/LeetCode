@@ -1,0 +1,36 @@
+// This code needs improvement
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        //Binary Search 
+        //Predicate Framework p(x) : a(x) > target last F
+        int r = matrix.size();
+        if(r == 0)
+            return false;
+        int c = matrix[0].size();
+        if(c == 0)
+            return false;
+        int i,j;
+        int lo = 0,hi = c-1,mid;
+        for(i = 0; i < r; i++){
+                if(target >= matrix[i][0] && target <= matrix[i][c-1]){
+                    lo = 0; hi = c-1;
+                    while(lo < hi){
+                        mid = lo + (hi - lo + 1)/2;
+                        
+                        if(matrix[i][mid] > target)
+                            hi = mid - 1;
+                        else
+                            lo = mid;
+                    }
+                    //Sanity Check
+                    // cout<<matrix[i][lo]<<" ";
+                    if(matrix[i][lo] == target)
+                        return true;
+                }
+        }
+        return false;
+        
+    }
+    
+};
