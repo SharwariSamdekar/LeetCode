@@ -1,0 +1,31 @@
+bool comp(int &a,int &b){
+    if(a*a < b*b)
+        return true;
+    else
+        return false;
+}
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& A) {
+        vector<int> sq(A.begin(),A.end());
+        //Arrange
+        
+        sort(A.begin(),A.end(),comp);
+//         for(int i = 0; i < A.size(); i++){
+//             sq[i] = sq[i] * sq[i];
+//         }
+        
+//         sq.sort()
+        
+        //Square
+        
+        int n = A.size();
+        for(int i = 0; i < n; i++){
+            A[i] = A[i] * A[i];
+        }
+        
+        return A;
+    }
+    
+};
