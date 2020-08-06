@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        //size of string ?? 
+        
+        int n = s.length();
+        vector<vector<bool>> table(n,vector<bool>(n,false));
+        
+        // Make a boolean table of size len x len
+        // T[i][j] is true if T[i+1][j-1] is true and first and last character is same for the string
+        
+        //Initialisation
+        
+        for(int i = 0; i < n; i++)
+            table[i][i] = true;
+        
+        //for length = 2
+        int start_index = 0;
+        int len = 1;
+        for(int i = 0; i < n-1; i++){
+         if(s[i] == s[i+1]){
+             table[i][i+1] = true;
+             len = 2;
+             start_index = i;
+         }
+        }
+        
+        //for length greater than 2
+        
+        for(int k = 3; k <=n; k++){
+            for(int i = 0; i < n - k + 1; i++){
+                int j = i + k - 1;
+                
+                if(table[i+1][j-1] && s[i] == s[j]){
+                    table[i][j] = true;
+                if(len < k){
+                    len = k;
+                    start_index = i;
+                }
+              }
+            }
+        }
+        return s.substr(start_index,len);
+    }
+};
