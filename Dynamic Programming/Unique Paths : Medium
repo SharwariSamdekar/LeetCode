@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        //Take unique paths in small grid and in larger grid unique_paths = u[i-1][j-1] + u[i+1][j-1]
+        
+        vector<vector<int>> u(m,vector<int>(n,0));
+        int i, j;
+        
+        for(i = 0; i < m; i++)
+            u[i][0] = 1;
+        
+        for(i = 0; i < n; i++)
+            u[0][i] = 1;
+        
+        for(i = 1; i < m; i++){
+            for(j = 1; j < n; j++){
+                u[i][j] = u[i][j-1] + u [i-1][j];
+            }
+        }
+        // return 0;
+    return u[m-1][n-1];
+    }
+    
+};
