@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        //get the sum of alternate numbers and return max n-1 or n
+        int n = nums.size();
+        int i;
+        if(n == 0)
+            return 0;
+        if(n == 1)
+            return nums[0];
+        if(n > 2)
+            nums[2] += nums[0];
+        for(i = 3; i < n; i++){
+            nums[i] += max(nums[i-2],nums[i-3]);
+        }
+        // cout<<nums[n-1];
+        return max(nums[n-2],nums[n-1]);
+    }
+};
