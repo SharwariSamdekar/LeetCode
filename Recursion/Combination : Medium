@@ -1,0 +1,44 @@
+class Solution {
+public:
+    void f(vector<int> &nums, int startIdx, int k, vector<int> currSet, vector<vector<int>> &res){
+        
+        //Base Step
+        //Found a soulution
+        if(k == 0){
+            res.push_back(currSet);
+            return;
+        }
+        
+        //Don't have solution
+        if(startIdx == nums.size())
+            return;
+        
+        // Prunning Step
+        
+//         if(k > nums.size() - startIdx)
+//             return;
+        // Recursive step
+        int i;
+        // Iterate over all possibilities of first element
+        
+        for(i = startIdx; i < nums.size()-k+1; i++){
+            //Consider i as the first element
+            currSet.push_back(nums[i]);
+            f(nums, i+1, k-1, currSet, res);
+            currSet.pop_back(); 
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> nums;
+        vector<vector<int>> res;
+        vector<int> currSet;
+        int i;
+        for(i = 0; i < n; i++)
+            nums.push_back(i+1);
+        
+        f(nums,0,k,currSet,res);
+        
+        return res;
+        
+    }
+};
