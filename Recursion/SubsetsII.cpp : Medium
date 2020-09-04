@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void f(vector<int> &nums,int startIdx, vector<vector<int>> &res, vector<int> currSet){
+        // Base Case
+        int n = nums.size();
+        if(startIdx == n){
+            res.push_back(currSet);
+            return;
+        }
+        
+        // Recursive Step
+        // Decision : Include 0 or more times
+        
+        // Let's find out first index which contains different element
+        int i, j;
+        i = startIdx + 1;
+        while(i < n  && nums[i] == nums[i-1]) i++;
+        
+        j = i; //first idex with different element
+        
+        // Include 0 times
+        f(nums,j,res,currSet);
+        // Include 1 or more times
+        for(i = startIdx; i < j; i++){
+            currSet.push_back(nums[i]);
+            f(nums,j,res,currSet);
+        }
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> currSet;
+        
+        sort(nums.begin(), nums.end());
+        
+        f(nums,0,res,currSet);
+        return res;
+    }
+};
