@@ -1,0 +1,44 @@
+class Solution {
+public:
+    
+    void f(vector<int> &nums, vector<bool> &visited, vector<vector<int>> &res, vector<int> currSet){
+        
+        int i, n = nums.size();
+        // Base Case
+        // Subsequence of length zero
+        // All the elements are visited
+        // If size of currset is equal to n then all elements are included or can keep the counter 
+        if(currSet.size() == n){
+            // cout<<currSet.size()<<endl;
+            res.push_back(currSet);
+            return;
+        }
+        
+        // Recursive Step
+        // Iterate through all the elements of the "SUBSEQUENCE" and consider the possibility og it being smallest
+        for(i = 0; i < n; i++){
+            if(!visited[i]){
+                // Part of subsequence
+                // Considering it as first element of the permutation
+                // Removing it from the subsequence
+                visited[i] = true;
+                // Contribution
+                currSet.push_back(nums[i]);
+                // Recurrence
+                f(nums, visited, res,currSet);
+                
+                visited[i] = false;
+                currSet.pop_back();
+            }
+        }
+    }
+        
+    vector<vector<int>> permute(vector<int>& nums) {
+          vector<vector<int>> res;
+        vector<int> currSet;
+        vector<bool> visited(nums.size(), false);
+        
+        f(nums, visited, res, currSet);
+        return res;
+    }
+};
