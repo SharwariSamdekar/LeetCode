@@ -1,0 +1,27 @@
+class Solution {
+public:
+    
+    void f(int startIdx, int k, int n, vector<vector<int>> &res, vector<int> currSet){
+        
+        // Base Step
+        if(currSet.size() == k && n == 0){
+            res.push_back(currSet);
+            return;
+        }
+        
+        // Recursive Step
+        
+        for(int i = startIdx; i < 10; i++){
+            currSet.push_back(i);
+            f(i+1,k,n-i,res,currSet);
+            currSet.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> currSet;
+        
+        f(1, k, n, res, currSet);
+        return res;
+    }
+};
