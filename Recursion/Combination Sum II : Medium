@@ -1,0 +1,40 @@
+class Solution {
+public:
+    
+    void f(vector<int> &candidates, int target, int startIdx, vector<vector<int>> &res, vector<int> currSet){
+        int n = candidates.size();
+        
+        // Base Step
+        if(target < 0)
+            return;
+        if(target == 0){
+            res.push_back(currSet);
+            return;
+        }
+        
+        // Recursive Step
+        // Decision : Include Exclude Decision
+        // Exclude
+        if( startIdx < n ){
+        int i = startIdx + 1;
+            while( i < n && candidates[i] == candidates[i-1]) i++;
+            
+            int j = i;
+        f(candidates, target, j, res, currSet);
+        
+        // Include
+        // for(int i = startIdx; i < n; i++){
+            currSet.push_back(candidates[startIdx]);
+            f(candidates, target - candidates[startIdx], startIdx + 1, res, currSet);
+            // currSet.pop_back();
+        }
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> currSet;
+        sort(candidates.begin(), candidates.end());
+        f(candidates, target, 0, res, currSet);
+        return res;
+    }
+};
