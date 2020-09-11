@@ -1,0 +1,35 @@
+class Solution {
+public:
+    
+    void f(vector<int> &candidates, int target, int startIdx, vector<vector<int>> &res, vector<int> currSet){
+        
+        int n = candidates.size();
+        // Base Step
+        if(target < 0)
+            return;
+        if(target == 0){
+            res.push_back(currSet);
+            return;
+        }
+        
+        // Recursive Step
+        
+        // Exclude the element
+        if(startIdx < n){
+        f(candidates, target, startIdx + 1, res, currSet);
+        
+        //Include the element
+        target = target - candidates[startIdx];
+        currSet.push_back(candidates[startIdx]);
+        f(candidates, target, startIdx, res, currSet);
+        }
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> currSet;
+        
+        f(candidates, target, 0, res, currSet);
+        return res;
+    }
+};
