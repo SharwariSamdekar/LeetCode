@@ -1,0 +1,33 @@
+class Solution {
+public:
+    
+    void f(vector<int> &nums, vector<bool> &visited, vector<vector<int>> &res, vector<int> currSet){
+        int n = nums.size();
+         // Base Step
+        if(currSet.size() == n){
+            res.push_back(currSet);
+            return;
+        }
+        // Recurrsive Step
+        
+        for(int i = 0; i < n; i++){
+            if(i > 0 && nums[i] == nums[i-1] && !visited[i-1])
+                continue;
+            if(!visited[i]){
+                visited[i] = true;
+                currSet.push_back(nums[i]);
+                f(nums,visited, res,currSet);
+                currSet.pop_back();
+                visited[i] = false;
+            }
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> currSet;
+        vector<bool> visited(nums.size(), false);
+        sort(nums.begin(), nums.end());
+        f(nums,visited,res, currSet);
+        return res;
+    }
+};
