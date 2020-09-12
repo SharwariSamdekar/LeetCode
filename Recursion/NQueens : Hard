@@ -1,0 +1,46 @@
+class Solution {
+public:
+    
+    void f(int k, vector<bool> &col, vector<bool> &d1, vector<bool>&d2, vector<string> &currComb, vector<vector<string>> &res){
+        int n = col.size();
+        // Base Step
+        if(k < 0){
+            res.push_back(currComb);
+            return;
+        }
+        
+        
+        // Recursive Step
+        
+        int i;
+        for(i = 0; i < n; i++){
+            
+            if(!col[i] && !d1[k-i+n-1] && !d2[i+k]){
+                
+                col[i] = true;
+                d1[k-i+n-1] = true;
+                d2[i+k] = true;
+                
+                // Current combination
+                currComb[k][i] = 'Q';
+                
+                f(k-1, col, d1,d2,currComb, res);
+                
+                col[i] = false;
+                d1[k-i+n-1] = false;
+                d2[i+k] = false;
+                currComb[k][i] = '.';
+            }
+        }
+    }
+    
+    vector<vector<string>> solveNQueens(int n) {
+        vector<bool> col(n,false), d1(2*n-1,false), d2(2*n-1,false);
+        vector<string> currComb(n, string(n,'.'));
+        vector<vector<string>> res;
+        
+        f(n-1, col, d1, d2, currComb, res);
+        
+        return res;
+    }
+};
