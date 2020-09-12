@@ -1,0 +1,41 @@
+class Solution {
+public:
+    
+    void f(int k, vector<bool> &col, vector<bool> &d1, vector<bool> &d2, int &res){
+        
+        int n = col.size();
+        // Base Step
+        if(k < 0){
+            res++;
+            return;
+        }
+        
+        // Recursive Step
+        // Enumerating possibilities for Kth queen in Kth row
+        // Go over all the columns
+        int i;
+        for(i = 0; i < n; i++){
+            // Check if I can position the queen at (k,i)
+            if(!col[i] && !d1[k-i+n-1] && !d2[i+k]){
+            // Valid State
+            col[i] = true;
+            d1[k-i+n-1] = true;
+            d2[i+k] = true;
+            
+            // Recursive call
+            f(k-1, col ,d1, d2, res);
+            // Reset for next step
+            col[i] = false;
+            d1[k-i+n-1] = false;
+            d2[i+k] = false;
+        }
+        }
+    }
+    
+    int totalNQueens(int n) {
+        vector<bool> col(n,false), d1(2*n-1, false), d2(2*n-1,false);
+        int res = 0;
+        f(n-1, col, d1, d2, res);
+        return res;
+    }
+};
