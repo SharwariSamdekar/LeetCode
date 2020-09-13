@@ -1,0 +1,59 @@
+class Solution {
+public:
+    
+    void reverseRem(string & res, vector<bool> &visited){
+        
+        for(int i = visited.size() - 1; i > 0; i--){
+            if(!visited[i]){
+                res += to_string(i);
+            }
+        }
+    }
+    int getPositionNum(vector<bool> &visited, int k){
+        int i, n =visited.size();
+        
+        for(i = 1; i < n; i++){
+            if(visited[i]) continue;
+            k--;
+            if(k == 0)
+                return i;
+        }
+        return -1;
+    }
+    string getPermutation(int n, int k) {
+        
+        vector<int> factorial(n+1,1);
+        int i, runK, q, rem, temp;
+        string res = "";
+        vector<bool> visited(n+1, false);
+        
+        // Store 1! to n!
+        for(i = 1; i <= n; i++){
+            factorial[i] = i * factorial[i-1];
+        }
+        runK = k;
+        for(i = 1; i <= n; i++){
+            
+            q = runK / factorial[n-i];
+            rem = runK % factorial[n-i];
+            
+            if(rem == 0){
+                temp = getPositionNum(visited, q);
+                res += to_string(temp);
+                visited[temp] = true;
+                
+                reverseRem(res,visited);
+                return res;
+            } 
+            else{
+                temp = getPositionNum(visited, q+1);
+                res += to_string(temp);
+                runK = rem;
+                visited[temp] = true;
+            }
+        }
+        
+        return res;
+        
+    }
+}; 
