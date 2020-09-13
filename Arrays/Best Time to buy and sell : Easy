@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        
+        // Buy on day for which next element is higher
+        // Then iterate till you find lower element and sell 
+        
+        int n = prices.size();
+        int i=0, prof = 0, buy = 0, sell=0;
+        
+        while(i < n-1){
+            while(i < n -1 && prices[i] >= prices[i+1])
+                i++;
+            buy = prices[i];
+            
+            while(i < n-1 && prices[i] <= prices[i+1])
+                i++;
+            sell = prices[i];
+            prof += sell - buy;
+        }
+        return prof;
+        
+    }
+};
