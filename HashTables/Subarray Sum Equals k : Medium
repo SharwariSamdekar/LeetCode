@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int n = nums.size(),j, cumSum = 0, res = 0;
+        unordered_map<int,int> m;
+        
+        m[0] = 1;
+        
+        for(j = 0; j < n; j++){
+            // Find all subarrays ending at j with sum k
+            cumSum += nums[j];
+            // Add to the result
+            if(m.find(cumSum-k) != m.end())
+                res += m[cumSum-k];
+            
+            // Store prefix sum
+            m[cumSum]++;
+        }
+        
+        return res;
+    }
+};
