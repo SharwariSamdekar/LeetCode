@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<int> prisonAfterNDays(vector<int>& cells, int N) {
+       // Step 1 : Finding out k and l
+        // Keep simulating till you find a repetition
+        unordered_map<string,int> m;
+        vector<string> state;
+        
+        // Result vector
+        vector<int> res;
+        
+        string currState="", nextState="";
+        int i,count = 1, k, l, offset;
+        
+        for(i = 0; i < 8; i++)
+            currState += to_string(cells[i]);
+            
+        state.push_back(currState);
+        m[currState] = 0;
+            
+            // Simulate till we get a repetition
+            
+            while(count <= N){
+                // Append first bit
+                nextState = "0";
+                // Append next six bits
+                for(i = 1; i < 7; i++)
+                    nextState += (currState[i-1] != currState[i+1] ? "0" : "1");
+                // Append last bit
+                nextState += "0";
+                
+
+                
+                // Check for repetition
+                if(m.find(nextState) == m.end()){
+                    m[nextState] = state.size();
+                    state.push_back(nextState);
+                    currState = nextState;
+                    count++;
+                    continue;
+                }
+                break;
+            }
+        
+        // All linear
+        if(count > N) {
+            for(i = 0; i < 8; i++)
+                res.push_back(currState[i]-'0');
+            return res;
+        }
+        
+        // Cycle
+        
+        k = m[nextState];
+        l = count - k;
+        offset = (N-k)%l;
+        
+        // State to be returned
+        for(i = 0; i < 8; i++){
+            res.push_back(state[k+offset][i]-'0');
+        }
+        
+        return res;
+        
+        
+        
+    }
+};
