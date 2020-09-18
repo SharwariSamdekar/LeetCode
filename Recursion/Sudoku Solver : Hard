@@ -1,0 +1,73 @@
+class Solution {
+public:
+    
+    void solveSudokuHelper(vector<vector<bool>> &row, vector<vector<bool>> &col, vector<vector<bool>> &box, int rowId, int colId, vector<vector<char>> &res, vector<vector<char>> &currBoard){
+        
+        cout<<rowId<<", "<<colId<<" ";
+        // Base Step
+        // Positive Base Case 
+        if(rowId == 9){
+            cout<<"here";
+            res = currBoard;
+ 
+            return;
+        }
+        
+        // if(rowId < 0 || rowId > 8 || colId < 0 || colId > 8) return;
+        
+        if(currBoard[rowId][colId] != '.'){
+            if(colId == 8){
+                cout<<"here";
+                    solveSudokuHelper(row, col, box, rowId+1, 0, res, currBoard);}
+                else{
+                    cout<<"else"<<endl;
+                    solveSudokuHelper(row, col, box, rowId, colId+1, res, currBoard);
+                }
+            return;
+        }
+        
+        // Recursive Step
+        int i;
+        for(i = 1; i <= 9; i++){
+            if(!row[rowId][i-1] && !col[colId][i-1] && !box[3*(rowId/3)+(colId/3)][i-1]){
+                currBoard[rowId][colId] = (char)('0'+i);
+                row[rowId][i-1] = true;
+                col[colId][i-1] = true;
+                box[3*(rowId/3)+(colId/3)][i-1] = true;
+                
+            if(colId == 8){
+                cout<<"here";
+                solveSudokuHelper(row, col, box, rowId+1, 0, res, currBoard);}
+                else{
+                    cout<<"not 8 colid = "<<colId<<endl;
+                    solveSudokuHelper(row, col, box, rowId, colId+1, res, currBoard);}
+                
+                currBoard[rowId][colId] = '.';
+                row[rowId][i-1] = false;
+                col[colId][i-1] = false;
+                box[3*(rowId/3)+(colId/3)][i-1] = false;
+            }
+        }
+    }
+    
+    void solveSudoku(vector<vector<char>>& board) {
+        vector<vector<bool>> row(9, vector<bool>(9,false));
+        vector<vector<bool>> col(9, vector<bool>(9,false));
+        vector<vector<bool>> box(9, vector<bool>(9,false));
+        
+        int i,j;
+        for(i = 0; i < 9; i++){
+            for(j = 0; j < 9; j++){
+                if(board[i][j] != '.'){
+                    row[i][(board[i][j] - '0') -1]=true;
+                    col[i][(board[i][j] - '0') -1]=true;
+                    box[3*(i/3)+(j/3)][(board[i][j] - '0') -1]=true;
+                }
+            }
+        }
+        vector<vector<char>> currBoard = board;
+        // vector<vector<char>> res = board;         
+                    solveSudokuHelper(row,col,box, 0,0, board, currBoard);
+        // board = res;
+    }
+};
