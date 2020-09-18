@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+        // Store position and frequency
+        unordered_map<int,int> m;
+        int n = wall.size(), i, j, maxCount = 0,pos;
+        unordered_map<int,int> :: iterator it;
+        for(i = 0; i < n; i++){
+            pos = 0;
+            for(j = 0; j < wall[i].size()-1; j++){
+                pos += wall[i][j];
+                
+                m[pos]++;
+                maxCount = max(maxCount, m[pos]);
+            }
+        }
+        
+        // for(it = m.begin(); it != m.end(); it++){
+        //     maxCount = max(maxCount, it->second);
+        // }
+        // This is optimized and added to first loop
+        
+        return (n - maxCount);
+    }
+};
