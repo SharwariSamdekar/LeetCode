@@ -1,0 +1,62 @@
+class Solution {
+public:
+    
+    // int gcd(int x, int y){
+    //     if(y == 0) return x;
+    //     return gcd(y, x%y);
+    // }
+    
+    int maxPoints(vector<vector<int>>& points) {
+        
+        int n = points.size(),i,j,dy,dx,g,currMax= 0, res = 0,dups = 0;
+        unordered_map<string, int> m;
+        string slope = "";
+        
+        // string is used to represent slope
+        
+        
+        
+        // Fix a point and enumerate all lines starting with i
+        for(i = 0; i < n; i++){
+            dups = 1;
+            currMax = 0;
+            m.clear();
+            // Second point for this i
+            for(j = i+1; j < n; j++){
+                
+                dy = points[j][1] - points[i][1];
+                dx = points[j][0] - points[i][0];
+                
+                if(dy == 0 && dx == 0){
+                    dups++;
+                    continue;
+                }
+                if(dx != 0){
+                    // g = gcd(dy,dx);
+                    g = __gcd(dy,dx);
+                    dy /= g;
+                    dx /= g;
+                }
+                
+                // Line parallel to y axis
+                if(dx == 0){
+                    dy = 1;
+                }
+                
+                
+                // Construct string for the slope
+                
+                slope = to_string(dy) + "/" + to_string(dx);
+                m[slope]++;
+                
+                currMax = max(currMax, m[slope]);
+            }
+            
+            // if(dups > 1)
+            currMax += dups;
+            res = max(res, currMax);
+            
+        }
+        return res;
+    }
+};
