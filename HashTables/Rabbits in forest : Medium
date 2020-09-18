@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+        // Storing the counts
+        // Use a Hash Table
+        // Unordered Map with key as the reabbit's reporting and value as count
+        
+        int n = answers.size(), i, res =0, key, value, groups = 0;
+        unordered_map<int,int> m;
+        unordered_map<int,int> :: iterator it; //Data type of iterator it;
+        
+        for(i = 0; i < n; i++){
+            // Way : 1 
+            m[answers[i]]++;
+            // Way : 2
+            // if(m.find(answers[i]) == m.end())
+            //     m.insert(answeres[i],1);
+            // else{
+            //     auto it = m.find(answeres[i]);
+            //     (it->second)++;
+            //     // m[answers[i]]++; Easier way
+            // }
+           
+        }
+        
+        // Iterate over a map
+        
+        for(it = m.begin(); it != m.end(); it++){
+            key = it->first;
+            value = it->second;
+            groups = ceil(((float)value/(key+1)));
+            
+            res += (groups * (key+1));
+        }
+        
+        return res;
+        
+    }
+};
