@@ -1,0 +1,70 @@
+class Solution {
+public:
+    
+    void handleAfterDecimal(long long int n, long long int d, string &res){
+        
+        // Print the part after the decimal
+        // Strategy : Keep printing till repetition
+        // Once I get a repetition, I will come back and insert a ( and a )
+        // Track the numerator key = numerator, value = position
+        unordered_map<long long int, long long int> m;
+        long long int q;
+        while(n > 0){
+            n = n * 10;
+            // while(n*10 < d){
+            //     res += "0";
+            //     n = n*10; 
+            // }
+            if(m.find(n) != m.end())
+                break;
+            q = n/d;
+            m[n] = res.size();
+            res += to_string(q);
+            n = n%d;
+
+        }
+        
+        if(n == 0) return;
+    
+        // Insert the bracket
+        
+        string prefix = res.substr(0,m[n]);
+        string suffix = res.substr(m[n],res.size()-m[n]);
+        
+        res = prefix + "(" + suffix + ")";
+        
+        
+    }
+    
+    
+    string fractionToDecimal(int numerator, int denominator) {
+        // Find the part before decimal
+        // Handle negatives
+        
+        string res = "";
+        long long int n = numerator, d = denominator, rem;
+        
+        if(n == 0 ) return "0";
+        
+        if((n < 0 && d > 0) || (n > 0 && d < 0))
+            res += "-";
+        
+        n = abs(n); d = abs(d);
+        
+        // Good to process positives
+        // Let's print the part before decimal
+        
+        res += to_string(n/d);
+        rem = n % d;
+        // Add the decimal point only if remainder is non zero
+        if(rem == 0) return res;
+        
+        res += ".";
+        
+        // Handle the part after decimal
+        handleAfterDecimal(rem, d, res);
+        
+        return res;
+        
+    }
+};
