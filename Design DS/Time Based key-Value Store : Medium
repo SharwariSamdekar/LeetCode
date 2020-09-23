@@ -1,0 +1,51 @@
+class TimeMap {
+public:
+    
+    int getLargestLessEqual(vector<pair<int,string>> &v, int start, int end, int key){
+        int lo = start, hi = end, mid;
+        
+        // Find last occurance
+        // FFFTTTT
+        // p(x) : v[x] > key
+        // last f
+        while(lo < hi){
+            mid = lo + (hi - lo + 1) / 2;
+            if(v[mid].first > key)
+                hi = mid - 1;
+            else
+                lo = mid;
+        }
+        
+        if(v[lo].first <= key)
+            return lo;
+        return -1;
+    }
+    /** Initialize your data structure here. */
+    // unordered_map m<string,map<int,string>> One Approach
+    // Second approach is with binary search
+    
+    unordered_map<string,vector<pair<int,string>>> m;
+    TimeMap() {
+        // m.clear();
+    }
+    
+    void set(string key, string value, int timestamp) {
+        // Find the position in unordered map
+        m[key].push_back({timestamp,value});
+    }
+    
+    string get(string key, int timestamp) {
+        int idx = getLargestLessEqual(m[key], 0, m[key].size()-1, timestamp);
+        
+        if(idx == -1)
+            return "";
+        return m[key][idx].second;
+    }
+};
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap* obj = new TimeMap();
+ * obj->set(key,value,timestamp);
+ * string param_2 = obj->get(key,timestamp);
+ */
