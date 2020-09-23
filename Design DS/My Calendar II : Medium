@@ -1,0 +1,36 @@
+class MyCalendarTwo {
+public:
+    map<int,int> m;
+    MyCalendarTwo() {
+        
+    }
+    
+    bool book(int start, int end) {
+        // Insert the event in the map
+        m[start]++;
+        m[end]--;
+        
+        // Check if it is overlapping
+        map<int,int> :: iterator it;
+        int count = 0;
+        for(it = m.begin(); it != m.end(); ++it){
+            count += (it->second);
+            
+            // If yes then remove it from the map
+        
+        if(count > 2){
+            m[start]--;
+            m[end]++;
+            return false;
+        }
+        }
+        
+        return true;
+    }
+};
+
+/**
+ * Your MyCalendarTwo object will be instantiated and called as such:
+ * MyCalendarTwo* obj = new MyCalendarTwo();
+ * bool param_1 = obj->book(start,end);
+ */
