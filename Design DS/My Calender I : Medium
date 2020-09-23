@@ -1,0 +1,49 @@
+class MyCalendar {
+public:
+    // 1st approach ordered map key->time value->count
+    // 2nd approach key->start and value->end
+    map<int,int> m;
+    
+    MyCalendar() {
+        
+    }
+    
+    bool book(int start, int end) {
+        // Check if it overlaps with any other interval
+        
+        map<int,int> :: iterator LB,prev;
+        
+        // FInd the first interval whose start >= this start
+        LB = m.lower_bound(start);
+        
+        // Two cases : the current start can be < all starts
+        // the current start can be >= all starts
+        
+        // Case 1 :
+        if(LB != m.begin()){
+            prev = LB;
+            prev--;
+            
+            // Check if overlapswith previous
+            if(start < (prev->second))
+                return false;
+        }
+        
+        // Case 2 :
+        if(LB != m.end()){
+            // If overlaps with next
+            if(end > (LB->first))
+                return false;
+        }
+        
+        // Doesn't overlap then insert
+        m[start] = end;
+        return true;
+    }
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
