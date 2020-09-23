@@ -1,0 +1,81 @@
+class LRUCache {
+public:
+    list<int> dll;
+    unordered_map<int, pair<int, list<int>::iterator>> cache;
+    int capacity;
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+        dll.clear();
+        cache.clear();
+    }
+    
+    
+    int update(int key, int val){
+       pair<int, list<int> :: iterator> value = cache[key];
+        int retval = val;
+        
+            // Update the Timestamp
+            // go to node in linked list
+            // Erase it 
+            // Append in begining
+            // Update in the map
+            
+        list<int> :: iterator it = value.second;
+        dll.erase(it);
+        
+        dll.push_front(key);
+        cache[key].first = val;
+        cache[key].second = dll.begin();
+        
+        return retval;
+    }
+    
+    
+    int get(int key) {
+        // Read the value from the cache
+        if(cache.find(key) == cache.end())
+            return -1;
+        
+        // Key is present
+        return update(key, cache[key].first);
+        
+    }
+    
+
+    
+    void put(int key, int value) {
+        // If update
+        if(cache.find(key) != cache.end()){
+            int v = update(key,value);
+            return;
+        }
+        
+        // 2 cases: If the cache is not full
+        
+        // If it an insert
+        // If the cache is full
+        if(cache.size() >= capacity){
+            // Remove the LRU item
+            // Remove from the list
+            int k = dll.back();
+            
+            dll.pop_back();
+            // Remove from the map
+            cache.erase(k);
+        }
+        // Insert
+        // Insert in the list
+        dll.push_front(key);
+        // Insert in the map
+        cache[key] = {value,dll.begin()};
+        return;
+        
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
