@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int n = nums.size(),i,res = INT_MAX, cumSum=0, reqSum, subArraySize;
+        map<int,int> m;
+        map<int,int>::iterator it;
+        m[0] = -1;
+        for( i = 0; i < n; i++){
+            cumSum += nums[i];
+            
+            // Required sum = cumSum - s
+            
+            reqSum = cumSum - s;
+            // have to find largest predix usm <= reqSum
+            it = m.upper_bound(reqSum);
+            if(it != m.begin()){
+                // UB - 1
+                --it;
+                
+                subArraySize = i - (it->second);
+                res = min(res, subArraySize);
+            }
+             m[cumSum] = i;
+        }
+        
+        return (res == INT_MAX)?0:res;
+    }
+};
