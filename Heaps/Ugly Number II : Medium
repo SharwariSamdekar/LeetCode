@@ -1,0 +1,36 @@
+class Solution {
+public:
+    typedef long long int ll;
+    int nthUglyNumber(int n) {
+        priority_queue<ll,vector<ll>,greater<ll>> pq;
+        
+        if(n == 1)
+            return 1;
+        
+        pq.push(2);
+        pq.push(3);
+        pq.push(5);
+        
+        int cnt = 1;
+        
+        while(cnt < n-1){
+            ll temp = pq.top();
+            pq.pop();
+            
+            if(temp%5 == 0){
+                pq.push(temp*5);
+            }
+            else if(temp % 3 == 0){
+                pq.push(temp*3);
+                pq.push(temp*5);
+            }
+            else if(temp%2 == 0){
+                pq.push(temp*2);
+                pq.push(temp*3);
+                pq.push(temp*5);
+            }
+            cnt++;
+        }
+        return pq.top();
+    }
+};
