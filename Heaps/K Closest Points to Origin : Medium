@@ -1,0 +1,27 @@
+class Solution {
+public:
+    
+    typedef vector<int> point;
+    struct compare{
+        bool operator()(const point& p1, const point& p2){
+            return (p1[0]*p1[0] + p1[1]*p1[1]) > (p2[0]*p2[0] + p2[1]*p2[1]);
+        }
+    };
+    
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K){
+        priority_queue<point,vector<point>, compare> pq(points.begin(), points.end());
+        
+        // for(auto node:points){
+        //     pq.push(node);
+        //     if(pq.size() > K) pq.pop();
+        // }
+        
+        vector<point> res;
+        
+        while(K--){
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        return res;
+    }
+};
