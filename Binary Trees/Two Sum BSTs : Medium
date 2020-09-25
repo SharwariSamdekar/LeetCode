@@ -1,0 +1,44 @@
+class Solution{
+	
+	Public : 
+	// bool twoSumBSTs(TreeNode* root1, TreeNode* root2, int target){
+	// 	if(roo1 == NULL || root2 == NULL) return false;
+
+	// 	int sum = root1->val + root2->val;
+	// 	if(sum == target) return true;
+	// 	if(sum > target){
+	// 		return twoSumBSTs(root1, root2->left,target) || twoSumBSTs(root1->left, root2, target);
+	// 	}
+	// 	else{
+	// 	return twoSumBSTs(root1, root2->right,target) || twoSumBSTs(root1->right, root2, target);
+	// 	}
+	// }
+
+	bool twoSumBSTs(TreeNode* root1, TreeNode* root2, int target){
+		// Call inorder for both root1 and root2
+		// get 2 sorted arrays
+		// use 2 pointers approach
+		vector<int> t1, t2;
+		inorder(root1, t1);
+		inorder(root2, t2);
+
+		int n1 = t1.size(), n2 = t2.size();
+		int i ,j;
+
+		for(i = 0, j = n2-1; i<n && j>=0){
+			int sum = t1[i]+t2[j];
+			if(sum == target)
+				return true;
+			if(sum > target) j--;
+			else i++;
+		}
+		return false;
+	}
+
+	void inorder(TreeNode* root, vector<int> &v){
+		if(root == NULL) return;
+		inorder(root->left,v);
+		v.push_back(root->val);
+		inorder(root->right,v);
+	}
+}
