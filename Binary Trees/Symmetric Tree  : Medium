@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+   
+    bool isSym(TreeNode* l, TreeNode* r){
+        // Base Case
+        if(l == NULL && r == NULL) return true;
+        if(l == NULL || r == NULL) return false;
+        // Compare the values
+        if(l->val != r->val)
+            return false;
+        // l->left and r->right
+        // l->right andr->left
+        
+        return isSym(l->left, r->right) && isSym(l->right, r->left);
+        
+    }
+    
+    bool isSymmetric(TreeNode* root) {
+        // 1. Iteratively can be solved using queues, level order 
+        // traversal from right and left
+        // 2. Can also be solved recursively
+        // Level order traversal and check level isnpalindrome
+        //    o   check forleft ka left and right ka right and left ka riight and right ka left
+        //   / \
+        //   o  o
+        //  / \ / \
+        //  o o o o     
+        
+        if(root == NULL) return true;
+        
+        return isSym(root->left,root->right);
+        
+        
+    }
+};
