@@ -1,0 +1,66 @@
+class WordDictionary {
+public:
+    
+    struct trieNode{
+        trieNode(){
+            isWord = false;
+            for(int i = 0; i < 26; i++)
+                next[i] = NULL;
+        }
+        bool isWord;
+        trieNode* next[26];
+    };
+    /** Initialize your data structure here. */
+    
+    trieNode *root;
+    WordDictionary() {
+        root = new trieNode();
+    }
+    
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        trieNode* temp = root;
+        for(auto c : word){
+            if(!temp->next[c-'a']) temp->next[c-'a'] = new trieNode();
+            temp=temp->next[c-'a'];
+        }
+        temp->isWord = true;
+    }
+    
+    
+    bool searchHelper(string word, trieNode* node){
+        trieNode *temp = node;
+        int n = word.size();
+        for(int i = 0; i < n; i++){
+            if(word[i]!='.'){
+                if(!temp->next[word[i]-'a']) return false;
+                temp=temp->next[word[i]-'a'];
+            }
+            else{
+                // recursively
+                int j;
+                for( j = 0; j < 26; j++){
+                    bool found=false;
+                    if(temp->next[j] != NULL)
+                        found = searchHelper(word.substr(i+1), temp->next[j]);
+                    if(found) return true;
+                }
+                if(j == 26)
+                    return false;
+            }
+        }
+        return temp->isWord;
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    bool search(string word) {
+        return searchHelper(word, root);
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */
