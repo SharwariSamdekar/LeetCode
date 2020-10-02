@@ -11,4 +11,26 @@ public:
         
         return maxsofar;
     }
+    
+    // Second Approach
+    
+      int n = nums.size(), i, res;
+        
+        vector<int> dp(n+1,0);
+        if(n == 0)
+            return 0;
+        // if(n == 1)
+        //     return nums[0];
+        dp[0] = nums[0];
+        // dp[i] = maximum sum of subarray ending at i
+        for(i = 1; i < n; i++){
+            dp[i] = max(nums[i], nums[i] + dp[i-1]);
+        }
+        res = dp[0];
+        // Our answer is maximum of all the subarrays ending at i
+        for(i= 0; i < n; i++){
+           res = max(res, dp[i]);
+       }
+        
+        return res;
 };
