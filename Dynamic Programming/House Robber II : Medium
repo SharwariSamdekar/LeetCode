@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size(),i;
+        vector<int> dp(n+1,0), b(n+1,0);
+        if(n == 0 |)
+            return 0;
+        if(n < 4){
+            for(i = 0; i < 4; i++)
+                dp[0] = max(dp[0], nums[i]);
+            return dp[0];
+        }
+        
+        dp[n] = 0;
+        dp[n-1] = nums[n-1];
+        // Solve for 0 to n-2 and n = 1 to n -1 and take maximum
+        
+        for(i = n-2; i > 0; i--){
+            dp[i] = max(nums[i] + dp[i+2], dp[i+1]);
+            // cout<<dp[i]<<endl;
+        }
+        
+        b[n] = 0;
+        b[n-1] = nums[n-2];
+        // cout<<b[n-1];
+        for(i = n-2; i > 0; i--){
+            b[i] = max(nums[i-1] + b[i+2], b[i+1]);
+            // cout<<b[i]<<" "<<b[i+2]<<" "<<b[i+1]<<" "<<nums[i]<<endl;
+        }
+        // cout<<dp[1]<<" "<<b[1];
+        return max(dp[1], b[1]);
+    }
+};
