@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        // Similar to longest subsequence but count number of subsequences
+        
+        int m = s.size(), n = t.size(), i, j;
+        vector<vector<long int>> dp(m+1,vector<long int>(n+1,0));
+        
+        
+        for(i = 0; i <= m; i++)
+            dp[i][0] = 1;
+        
+        for(i = 1; i <= m; i++){
+            for(j = 1; j <= n; j++){
+                if(s[i-1] == t[j-1])
+                    dp[i][j] += dp[i-1][j-1];
+                dp[i][j] += dp[i-1][j];
+            }
+        }
+        
+        return dp[m][n];
+        
+    }
+};
