@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        // convert deadend into set or map for efficient search
+        int n = deadends.size(), i;
+        unordered_set<string> s(deadends.begin(), deadends.end());
+        unordered_set<string> visited;
+        
+        if(s.find("0000") != s.end())
+            return -1;
+        // BFS approach. Each level is a node and try finding shortest path
+        
+        queue<string> lock;
+        int level, result = 0;
+        
+        lock.push("0000");
+        visited.insert("0000");
+        
+        while(!lock.empty()){
+            level = lock.size();
+            
+            while(level--){
+                string up, down, curr = lock.front();
+                lock.pop();
+                
+                if(curr == target)
+                    return result;
+                
+                for(i = 0; i < 4; i++){
+                    up = down = curr;
+                    up[i] = up[i] == '9' ? '0' : up[i]+1;
+                    down[i] = down[i] == '0' ? '9' : down[i] - 1;
+                    
+                    if(visited.find(up) == visited.end() && s.find(up) == s.end()){
+                        lock.push(up);
+                        visited.insert(up);
+                    }
+                    if(visited.find(down) == visited.end() && s.find(down) == s.end()){
+                        lock.push(down);
+                        visited.insert(down);
+                    }
+                }
+            }
+            result++;
+        }
+        
+        return -1;
+        
+    }
+};
